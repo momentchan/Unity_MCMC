@@ -18,14 +18,14 @@ namespace mj.gist.math {
             this.Scale = scale;
         }
 
-        public IEnumerable<Vector3> Chain(int nInitialize, int nLimit, float threshold) {
+        public IEnumerable<Vector3> Chain(int nInitials, int nSamples, float threshold) {
             Reset();
 
             // Burn-in
-            for (var i = 0; i < nInitialize; i++)
+            for (var i = 0; i < nInitials; i++)
                 Next(threshold);
 
-            for (var i = 0; i < nLimit; i++) {
+            for (var i = 0; i < nSamples; i++) {
                 yield return curr;
                 Next(threshold);
             }

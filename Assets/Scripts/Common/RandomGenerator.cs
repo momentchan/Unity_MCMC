@@ -13,6 +13,15 @@ namespace mj.gist.math {
             return mu + sigma * z;
         }
 
+        public static Vector2 RandGaussian() {
+            var u1 = Random.value;
+            var u2 = Random.value;
+
+            var sqrtLuU1 = Mathf.Sqrt(-2.0f * Mathf.Log(u1));
+
+            return new Vector2(Mathf.Cos(2.0f * Mathf.PI * u2), Mathf.Sin(2.0f * Mathf.PI * u2)) * sqrtLuU1;
+        }
+
         // cauchy distribution
         public static float RandCauchy(float mu, float gamma) {
             return mu + gamma * Mathf.Tan(Mathf.PI * (Random.value - 0.5f));

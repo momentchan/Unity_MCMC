@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace MCMC {
-    public class Metropolis3DSample : MonoBehaviour {
+    public class Metropolis3DExample : MonoBehaviour {
         [SerializeField] private int lEdge = 30;
-        [SerializeField] private int nInitial = 100; // burn-in
-        [SerializeField] private int nLimit = 100;
+        [SerializeField] private int nInitials = 100; // burn-in
+        [SerializeField] private int nSamples = 100;
         [SerializeField] private int loop = 400;
         [SerializeField] private float threshold = -100f;
         [SerializeField] private GameObject prefab;
+
+        [SerializeField] private float sleepDuration = 0.1f;
 
         private Vector4[] data;
         private Metropolis3D metropolis;
@@ -38,9 +40,9 @@ namespace MCMC {
 
         private IEnumerator StartChaining() {
             for(var i = 0; i < loop; i++) {
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(sleepDuration);
 
-                foreach(var pos in metropolis.Chain(nInitial, nLimit, threshold)) {
+                foreach(var pos in metropolis.Chain(nInitials, nSamples, threshold)) {
                     Instantiate(prefab, pos, Quaternion.identity);
                 }
             }
