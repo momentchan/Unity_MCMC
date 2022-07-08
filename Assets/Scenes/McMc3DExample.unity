@@ -330,12 +330,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b805474d776f1ff4b8e7a6b86e513069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lEdge: 30
-  nInitial: 100
-  nLimit: 20
-  loop: 600
+  lEdge: 20
+  nInitials: 100
+  nSamples: 100
+  loop: 400
   threshold: -100
   prefab: {fileID: 7813096407354925926, guid: c8a6dffa216619445b691af33c910dc5, type: 3}
+  sleepDuration: 0.1
 --- !u!4 &1104135840
 Transform:
   m_ObjectHideFlags: 0

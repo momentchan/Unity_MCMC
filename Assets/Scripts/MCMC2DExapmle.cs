@@ -1,3 +1,4 @@
+using mj.gist.sampling;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -13,10 +14,10 @@ namespace MCMC {
 
         [SerializeField] private float sleepDuration = 0.1f;
 
-        private MCMCTextureSampler mcmc;
+        private MCMC2DSampler mcmc;
 
         void Start() {
-            mcmc = new MCMCTextureSampler(texture, stddev);
+            mcmc = new MCMC2DSampler(texture, stddev);
             StartCoroutine(StartChaining());
         }
         private IEnumerator StartChaining() {
@@ -30,7 +31,8 @@ namespace MCMC {
                     var worldPos = Camera.main.ViewportToWorldPoint(uv);
                     worldPos.z = 0f;
 
-                    Instantiate(prefab, worldPos, Quaternion.identity);
+                    var go = Instantiate(prefab, worldPos, Quaternion.identity);
+                    go.transform.parent = transform;
                 }
             }
         }

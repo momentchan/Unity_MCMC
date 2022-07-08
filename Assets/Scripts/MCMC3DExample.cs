@@ -1,10 +1,11 @@
 using mj.gist.math;
+using mj.gist.sampling;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MCMC {
-    public class Metropolis3DExample : MonoBehaviour {
+    public class MCMC3DExample : MonoBehaviour {
         [SerializeField] private int lEdge = 30;
         [SerializeField] private int nInitials = 100; // burn-in
         [SerializeField] private int nSamples = 100;
@@ -15,12 +16,12 @@ namespace MCMC {
         [SerializeField] private float sleepDuration = 0.1f;
 
         private Vector4[] data;
-        private Metropolis3D metropolis;
+        private MCMC3DSampler mcmc;
 
         void Start() {
             data = GenerateDistribution();
 
-            metropolis = new Metropolis3D(data, lEdge * Vector3.one);
+            mcmc = new MCMC3DSampler(data, lEdge * Vector3.one, threshold);
             StartCoroutine(StartChaining());
         }
 
@@ -42,8 +43,9 @@ namespace MCMC {
             for(var i = 0; i < loop; i++) {
                 yield return new WaitForSeconds(sleepDuration);
 
-                foreach(var pos in metropolis.Chain(nInitials, nSamples, threshold)) {
-                    Instantiate(prefab, pos, Quaternion.identity);
+                foreach(var pos in mcmc.Chain(nInitials, nSamples)) {
+                    var go = Instantiate(prefab, pos, Quaternion.identity);
+                    go.transform.parent = transform;
                 }
             }
         }
